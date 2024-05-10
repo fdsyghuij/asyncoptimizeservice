@@ -1,18 +1,16 @@
-function searchRange(nums, target) {
-  let left = 0;
-  let right = nums.length - 1;
-  let start = -1;
-  let end = -1;
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
-    if (nums[mid] === target) {
-      start = mid;
-      end = mid;
-      while (nums[start] === target) start--;
-      while (nums[end] === target) end++;
-      return [start + 1, end - 1];
-    } else if (nums[mid] < target) left = mid + 1;
-    else right = mid - 1;
+const countingSort = (arr) => {
+  const min = Math.min(...arr);
+  const max = Math.max(...arr);
+  const count = Array(max - min + 1).fill(0);
+  for (let num of arr) {
+    count[num - min]++;
   }
-  return [start, end];
-}
+  let sortedIndex = 0;
+  for (let i = min; i <= max; i++) {
+    while (count[i - min] > 0) {
+      arr[sortedIndex++] = i;
+      count[i - min]--;
+    }
+  }
+  return arr;
+};
